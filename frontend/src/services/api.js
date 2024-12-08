@@ -1,8 +1,7 @@
+const API_BASE_URL = "https://goscroll-backend-dnd6dmhbgncugjge.eastus2-01.azurewebsites.net";
 
-const API_BASE_URL = "https://goscroll-backend-dnd6dmhbgncugjge.eastus2-01.azurewebsites.net"
-console.log('API BASE URL:', API_BASE_URL); // Debug log
-
-export const BLOB_ACCOUNT = "cosmosdbgoscroll";
+// Updated with the correct Blob Storage URL
+export const BLOB_ACCOUNT = "https://goscrollstorageaccount.blob.core.windows.net/";
 
 export const submitNewAsset = async (fileData) => {
   const formData = new FormData();
@@ -11,28 +10,46 @@ export const submitNewAsset = async (fileData) => {
   formData.append('userName', fileData.userName);
   formData.append('File', fileData.File);
 
-  console.log('Submitting to:', `${API_BASE_URL}/api/upload`); // Debug log
+  console.log('Submitting to:', `${API_BASE_URL}/api/upload`);
 
   const response = await fetch(`${API_BASE_URL}/api/upload`, {
     method: 'POST',
     body: formData,
     cache: 'no-cache',
+    headers: {
+      'Accept': 'application/json',
+    }
   });
 
   if (!response.ok) {
-    throw new Error('Upload failed');
+    const errorText = await response.text();
+    console.error('Upload failed:', errorText);
+    throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
   }
+  
   return response.json();
 };
 
 export const getImages = async () => {
   try {
-    console.log('Fetching images from:', `${API_BASE_URL}/api/images`); // Debug log
-    const response = await fetch(`${API_BASE_URL}/api/images`);
+    console.log('Fetching images from:', `${API_BASE_URL}/api/images`);
+    
+    const response = await fetch(`${API_BASE_URL}/api/images`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      }
+    });
+
     if (!response.ok) {
-      throw new Error('Failed to fetch images');
+      const errorText = await response.text();
+      console.error('Failed to fetch images:', errorText);
+      throw new Error(`Failed to fetch images: ${response.status} ${response.statusText}`);
     }
-    return await response.json();
+
+    const data = await response.json();
+    console.log('Fetched images:', data); // Debug log to see the response
+    return data;
   } catch (error) {
     console.error('Error fetching images:', error);
     throw error;
