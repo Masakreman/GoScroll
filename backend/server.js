@@ -16,8 +16,8 @@ const GET_IMAGES_LOGIC_APP = process.env.GET_IMAGES_LOGIC_APP;
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*'
 }));
-
 app.use(express.json());
+
 
 // Proxy endpoint for image upload
 app.post('/api/upload', upload.single('File'), async (req, res) => {
