@@ -1,4 +1,5 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const REACT_APP_API_BASE_URL = "https://goscroll-backend-dnd6dmhbgncugjge.eastus2-01.azurewebsites.net"
 console.log('API BASE URL:', API_BASE_URL); // Debug log
 
 export const BLOB_ACCOUNT = "cosmosdbgoscroll";
