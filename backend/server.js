@@ -13,8 +13,6 @@ const upload = multer({ memory: true });
 const UPLOAD_LOGIC_APP = process.env.UPLOAD_LOGIC_APP;
 const GET_IMAGES_LOGIC_APP = process.env.GET_IMAGES_LOGIC_APP;
 
-
-
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*'
 }));
@@ -36,7 +34,6 @@ app.post('/api/upload', upload.single('File'), async (req, res) => {
     formData.append('FileName', req.body.FileName);
     formData.append('userID', req.body.userID);
     formData.append('userName', req.body.userName);
-
     // Make request to Logic App
     const response = await axios.post(UPLOAD_LOGIC_APP, formData, {
       headers: {
