@@ -34,7 +34,6 @@ app.post('/api/upload', upload.single('File'), async (req, res) => {
     formData.append('FileName', req.body.FileName);
     formData.append('userID', req.body.userID);
     formData.append('userName', req.body.userName);
-
     // Make request to Logic App
     const response = await axios.post(UPLOAD_LOGIC_APP, formData, {
       headers: {
