@@ -75,10 +75,6 @@ function App() {
       setLoading(false);
     }
   };
-
-
-  
-  
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
       {/* Upload Form */}
