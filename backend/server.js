@@ -30,8 +30,6 @@ app.post('/api/upload', upload.single('File'), async (req, res) => {
       contentType: req.file.mimetype
     });
     
-
-    
     // Append other fields
     formData.append('FileName', req.body.FileName);
     formData.append('userID', req.body.userID);
