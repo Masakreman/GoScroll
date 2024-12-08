@@ -13,6 +13,8 @@ const upload = multer({ memory: true });
 const UPLOAD_LOGIC_APP = process.env.UPLOAD_LOGIC_APP;
 const GET_IMAGES_LOGIC_APP = process.env.GET_IMAGES_LOGIC_APP;
 
+
+
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*'
 }));
