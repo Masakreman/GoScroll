@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'backend/**'  # Only trigger on changes to backend directory
+      - 'backend/**'
 
 jobs:
   build_and_deploy:
@@ -19,28 +19,13 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        working-directory: ./backend  # Change to backend directory
-        run: |
-          npm install
-
-      - name: Build
         working-directory: ./backend
         run: |
-          npm run build --if-present  # Run build if it exists
-
-      # Zip the backend directory for deployment
-      - name: Zip Backend Directory
-        run: |
-          cd backend
-          zip -r ../backend-deploy.zip ./*
+          npm install --no-optional --no-package-lock
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'goscroll-backend'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: './backend-deploy.zip'  # Deploy the zipped package
-
-      - name: Log Deploy Status
-        run: |
-          echo "Deployment completed"
+          package: ./backend
