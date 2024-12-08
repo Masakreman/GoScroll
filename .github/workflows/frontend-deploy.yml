@@ -9,19 +9,20 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3  # Updated to v3
 
-      - name: Build Frontend
-        working-directory: ./frontend
-        run: |
-          npm install
-          npm run build
-          
-      - name: Deploy
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Specify Node version
+
+      - name: Build And Deploy
+        id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "./frontend"
+          app_location: "/frontend"  # Remove the ./ prefix
           output_location: "build"
+          skip_api_build: true
