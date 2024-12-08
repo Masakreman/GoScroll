@@ -51,6 +51,7 @@ app.post('/api/upload', upload.single('File'), async (req, res) => {
   }
 });
 
+
 // Proxy endpoint for getting images
 app.get('/api/images', async (req, res) => {
   try {
