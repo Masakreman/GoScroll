@@ -43,8 +43,6 @@ function App() {
       setError("Please fill out all fields and select a file.");
       return;
     }
-
-
     
     try {
       setLoading(true);
