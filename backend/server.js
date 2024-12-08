@@ -18,7 +18,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-
 // Proxy endpoint for image upload
 app.post('/api/upload', upload.single('File'), async (req, res) => {
   try {
