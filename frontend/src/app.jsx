@@ -2,38 +2,52 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const App = () => {
-    const [images, setImages] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null);
-  
-    const handleFileSelect = (event) => {
-      setSelectedFile(event.target.files[0]);
-    };
-  
-    const handleUpload = async () => {
-      if (!selectedFile) return;
-  
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-  
+  const [images, setImages] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      const response = await axios.post('api/upload', formData);
+      setImages([...images, response.data]);
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchImages = async () => {
       try {
-        const response = await api.uploadImage(formData);  // Use api service
-        setImages([...images, response]);
+        const response = await axios.get('api/images');
+        setImages(response.data);
       } catch (error) {
-        console.error('Upload failed:', error);
+        console.error('Failed to fetch images:', error);
       }
     };
+    fetchImages();
+  }, []);
+
+  useEffect(() => {
+    // Test API connection
+    fetch('/api/test')
+      .then(res => res.json())
+      .then(data => console.log('API Connection:', data))
+      .catch(err => console.error('API Error:', err));
   
-    useEffect(() => {
-      const fetchImages = async () => {
-        try {
-          const images = await api.getImages();  // Use api service
-          setImages(images);
-        } catch (error) {
-          console.error('Failed to fetch images:', error);
-        }
-      };
-      fetchImages();
-    }, []);
+    // Test blob storage connection
+    fetch('/api/images')
+      .then(res => res.json())
+      .then(data => console.log('Storage Connection:', data))
+      .catch(err => console.error('Storage Error:', err));
+  }, []);
 
   return (
     <div className="p-4">

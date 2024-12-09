@@ -89,4 +89,8 @@ initializeAzureResources().then(() => {
   });
 });
 
+app.get('/api/test', (req, res) => {
+  res.json({ message: "Backend is connected!" });
+});
+
 module.exports = app;
