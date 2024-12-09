@@ -35,6 +35,20 @@ const App = () => {
     fetchImages();
   }, []);
 
+  useEffect(() => {
+    // Test API connection
+    fetch('/api/test')
+      .then(res => res.json())
+      .then(data => console.log('API Connection:', data))
+      .catch(err => console.error('API Error:', err));
+  
+    // Test blob storage connection
+    fetch('/api/images')
+      .then(res => res.json())
+      .then(data => console.log('Storage Connection:', data))
+      .catch(err => console.error('Storage Error:', err));
+  }, []);
+
   return (
     <div className="p-4">
       <h1 className="text-2xl mb-4">Media Gallery</h1>
