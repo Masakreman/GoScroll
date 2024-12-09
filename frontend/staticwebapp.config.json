@@ -1,17 +1,20 @@
 {
-    "routes": [
-      {
-        "route": "/api/*",
-        "methods": ["GET", "POST"],
-        "rewrite": "/api/$1"
-      },
-      {
-        "route": "/*",
-        "serve": "/index.html",
-        "statusCode": 200
-      }
-    ],
-    "navigationFallback": {
-      "rewrite": "index.html"
+  "routes": [
+    {
+      "route": "/api/*",
+      "methods": ["GET", "POST"],
+      "rewrite": "/api/$1"
+    },
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
     }
+  ],
+  "platform": {
+    "apiRuntime": "node:18"
+  },
+  "navigationFallback": {
+    "rewrite": "index.html"
   }
+}
