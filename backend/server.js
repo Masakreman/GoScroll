@@ -32,6 +32,10 @@ async function initializeAzureResources() {
   }
 }
 
+const cors = require('cors');
+app.use(cors());
+app.use(express.json());
+
 const upload = multer({ storage: multer.memoryStorage() });
 
 app.post('/api/upload', upload.single('file'), async (req, res) => {
